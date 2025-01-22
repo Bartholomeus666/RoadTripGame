@@ -10,15 +10,18 @@ public class GameModel : ModelBase
     public event EventHandler<SpawnModelEventArgs<SimpleTurretModel>> SpawnSimpleTurretModel;
 
 
-
-
-
-
-
-
-    public void SpawnSimpleTurret()
+    public GameModel() 
     {
-        SimpleTurretModel newSimpleTurret = new SimpleTurretModel();
+        EnemyModels = new List<EnemyModelBase>();
+    }
+
+
+
+
+
+    public void SpawnSimpleTurret(Vector2 postition)
+    {
+        SimpleTurretModel newSimpleTurret = new SimpleTurretModel(postition);
         SpawnSimpleTurretModel?.Invoke(this, new SpawnModelEventArgs<SimpleTurretModel>(newSimpleTurret));
     }
 }
