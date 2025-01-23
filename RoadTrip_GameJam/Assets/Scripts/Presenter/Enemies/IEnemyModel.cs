@@ -8,4 +8,6 @@ public interface IEnemyModel
 	public float Speed { get; set; }
 	public StateMachine Machine { get; set; }
 	public void OnMoved(Vector2 direction);
+
+	public event EventHandler<EnemyMovedEventArgs> OnDelete;
 }
