@@ -4,7 +4,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class SimpleTurretModel : ModelBase, ITurret
 {
-    public float _cooldownTime { get; set; }
+    public float _cooldownTime { get; set; } = 5;
     public float _damage { get; set; }
     public float Range { get; set; }
     public Vector2 Position { get; set; }
@@ -21,7 +21,7 @@ public class SimpleTurretModel : ModelBase, ITurret
 
     public void Shoot()
     {
-        Collider2D[] targetInViewRadius = Physics2D.OverlapCircleAll(Position, _range, _targetLayers);
+        Collider2D[] targetInViewRadius = Physics2D.OverlapCircleAll(Position, Range, _targetLayers);
         float targetDis = 10000000f;
 
         foreach(Collider2D target in targetInViewRadius)
@@ -40,6 +40,11 @@ public class SimpleTurretModel : ModelBase, ITurret
         if (_cooldownTime > 0)
         { 
             _cooldownTime -= deltaTime;
+        }
+        else
+        {
+            Shoot();
+            _cooldownTime = 5;
         }
     }
 }
