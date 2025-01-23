@@ -1,5 +1,5 @@
-using System.Numerics;
 using System;
+using UnityEngine;
 using StatePattern;
 using UnityEditor.Experimental.GraphView;
 
@@ -12,13 +12,14 @@ public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 	public EnemyWalkingState _walkingState;
 	public EnemyAttackState _attackState;
 
+	public bool IsColliding = false;
+
 
 	public event EventHandler<EnemyMovedEventArgs> OnMove;
-	public MotorcycleEnemyModel(Vector2 goal, Vector2 currentposition, float speed)
+	public MotorcycleEnemyModel(Vector2 goal, Vector2 currentposition)
 	{
 		Goal = goal;
 		Position = currentposition;
-		Speed = speed;
 		_walkingState = new EnemyWalkingState(this);
 		_attackState = new EnemyAttackState(this);
 		Machine = new StateMachine(_walkingState);
@@ -27,10 +28,11 @@ public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 	public void UpdatePosition(float deltaTime)
 	{
 		Machine.Update(deltaTime);
+		Debug.Log(IsColliding);
 	}
 	public void OnMoved(Vector2 direction)
 	{
-		if (direction == Vector2.Zero)
+		if (IsColliding)
 		{
 			Machine.SwitchState(_attackState);
 		}
@@ -38,14 +40,6 @@ public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 		{
 			OnMove.Invoke(this, new EnemyMovedEventArgs(direction));
 		}
-	}
-}
-public class EnemyMovedEventArgs
-{
-	public Vector2 _direction { get; set; }
-	public EnemyMovedEventArgs(Vector2 direction)
-	{
-		_direction = direction;
 	}
 }
 
