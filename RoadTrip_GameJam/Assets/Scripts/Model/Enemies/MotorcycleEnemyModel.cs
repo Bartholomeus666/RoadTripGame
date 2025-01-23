@@ -10,6 +10,7 @@ public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 	public float Speed { get; set; }
 	public StateMachine Machine { get; set; }
 	public EnemyWalkingState _walkingState;
+	public EnemyAttackState _attackState;
 
 
 	public event EventHandler<EnemyMovedEventArgs> OnMove;
@@ -19,6 +20,8 @@ public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 		Position = currentposition;
 		Speed = speed;
 		_walkingState = new EnemyWalkingState(this);
+		_attackState = new EnemyAttackState(this);
+		Machine = new StateMachine(_walkingState);
 
 	}
 	public void UpdatePosition(float deltaTime)
@@ -27,7 +30,14 @@ public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 	}
 	public void OnMoved(Vector2 direction)
 	{
-		OnMove.Invoke(this, new EnemyMovedEventArgs(direction));
+		if (direction == Vector2.Zero)
+		{
+			Machine.SwitchState(_attackState);
+		}
+		else
+		{
+			OnMove.Invoke(this, new EnemyMovedEventArgs(direction));
+		}
 	}
 }
 public class EnemyMovedEventArgs

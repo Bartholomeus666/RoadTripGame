@@ -29,7 +29,6 @@ namespace StatePattern
 			if (Vector2.Distance(_model.Goal, _model.Position) < 0.1f)
 			{
 				direction = Vector2.Zero;
-				_model.Machine.SwitchState(new EnemyIdleState(_model));
 			}
 			direction = Vector2.Normalize(direction);
 			direction *= _model.Speed;
