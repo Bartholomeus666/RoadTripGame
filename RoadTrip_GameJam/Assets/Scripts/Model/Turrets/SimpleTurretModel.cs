@@ -4,7 +4,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class SimpleTurretModel : ModelBase, ITurret
 {
-    public float _cooldownTime { get; set; } = 5;
+    public float _cooldownTime { get; set; } = 2;
     public float _damage { get; set; }
     public float Range { get; set; }
     public Vector2 Position { get; set; }

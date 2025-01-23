@@ -9,5 +9,6 @@ public interface IEnemyModel
 	public StateMachine Machine { get; set; }
 	public void OnMoved(Vector2 direction);
 
-	public event EventHandler<EnemyMovedEventArgs> OnDelete;
+	public event EventHandler OnDelete;
+	public void DeleteThis();
 }
