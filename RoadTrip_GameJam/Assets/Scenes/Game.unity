@@ -224,6 +224,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _simpleTurretPrefab: {fileID: 2425853311451348866, guid: afc190187434a924cb7b92e8edd99eb7, type: 3}
+  _enemyPrefab: {fileID: 5125177344287364511, guid: 6b6fe29f5a8c301489476591cdcc68c5, type: 3}
+  _playerPrefab: {fileID: 1662049072}
+  IntervalMotorcycles: 2
 --- !u!1 &563109803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2978,3 +2981,4 @@ SceneRoots:
   - {fileID: 320009305}
   - {fileID: 1129900252}
   - {fileID: 4796164157180209784}
+  - {fileID: 245598565}
