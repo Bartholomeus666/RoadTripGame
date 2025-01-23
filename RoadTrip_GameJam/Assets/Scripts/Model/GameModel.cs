@@ -12,13 +12,14 @@ public class GameModel : ModelBase
 
 	public GameObject _wagon;
 
+	
 	public GameModel() 
     {
         EnemyModels = new List<IEnemyModel>();
 	}
 	public void Start()
 	{
-		SpawnEnemy(new Vector2(-4, -4));
+		SpawnEnemy(new Vector2(-12, UnityEngine.Random.Range(-5,5)));
 	}
 
 
