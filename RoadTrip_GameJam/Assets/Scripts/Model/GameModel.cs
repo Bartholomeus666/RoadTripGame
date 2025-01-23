@@ -33,5 +33,11 @@ public class GameModel : ModelBase
     {
         SimpleTurretModel newSimpleTurret = new SimpleTurretModel(postition);
         SpawnSimpleTurretModel?.Invoke(this, new SpawnModelEventArgs<SimpleTurretModel>(newSimpleTurret));
+        newSimpleTurret.BulletFired += SpawnBullet;
+    }
+
+    private void SpawnBullet(object sender, EventArgs e)
+    {
+        Debug.Log("Shoot Bullet");
     }
 }
