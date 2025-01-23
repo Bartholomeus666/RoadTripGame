@@ -1,12 +1,13 @@
 using System.ComponentModel;
 using UnityEngine;
-using System.Numerics;
 using System;
 
 
 public class MotorcycleEnemyPresenter : PresenterBase<MotorcycleEnemyModel>
 {
-	[SerializeField] float _speed;
+	[SerializeField]float _speed;
+
+	bool _isColliding = false;
 	protected override void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
 	{
 		throw new System.NotImplementedException();
@@ -15,7 +16,7 @@ public class MotorcycleEnemyPresenter : PresenterBase<MotorcycleEnemyModel>
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
     {
-        Model = new MotorcycleEnemyModel(new System.Numerics.Vector2(3, 3), new System.Numerics.Vector2(transform.position.x, transform.position.y), _speed);
+		Model.Speed = _speed;
 		Model.OnMove += MoveCharacter;
 	}
 
@@ -23,11 +24,25 @@ public class MotorcycleEnemyPresenter : PresenterBase<MotorcycleEnemyModel>
     void Update()
     {
         Model.UpdatePosition(Time.deltaTime);
-		Model.Position = new System.Numerics.Vector2(transform.position.x, transform.position.y);
+		Model.Position = new Vector2(transform.position.x, transform.position.y);
+		Model.IsColliding = _isColliding;
 	}
 	public void MoveCharacter(object sender, EnemyMovedEventArgs e)
 	{
-		transform.position += new UnityEngine.Vector3(e._direction.X, e._direction.Y, 0) * Time.deltaTime;
+		transform.position += new Vector3(e._direction.x, e._direction.y, 0) * Time.deltaTime;
 	}
-
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Player")
+		{
+			_isColliding = true;
+		}
+	}
+	private void OnCollisionExit2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Player")
+		{
+			_isColliding = false;
+		}
+	}
 }

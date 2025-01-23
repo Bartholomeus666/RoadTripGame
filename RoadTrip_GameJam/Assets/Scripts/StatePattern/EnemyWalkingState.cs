@@ -1,5 +1,5 @@
-﻿using System.Numerics;
-using System;
+﻿using System;
+using UnityEngine;
 using StatePattern;
 using UnityEditor.Experimental.GraphView;
 using Unity.VisualScripting;
@@ -28,9 +28,9 @@ namespace StatePattern
 			Vector2 direction = _model.Goal - _model.Position;
 			if (Vector2.Distance(_model.Goal, _model.Position) < 0.1f)
 			{
-				direction = Vector2.Zero;
+				direction = Vector2.zero;
 			}
-			direction = Vector2.Normalize(direction);
+			direction = direction.normalized;
 			direction *= _model.Speed;
 			_model.OnMoved(direction);
 		}
