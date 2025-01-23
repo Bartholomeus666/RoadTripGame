@@ -1,36 +1,43 @@
 using System.Numerics;
 using System;
+using StatePattern;
 using UnityEditor.Experimental.GraphView;
 
-public class MotorcycleEnemyModel : ModelBase
+public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 {
-	Vector2 _goal;
-	Vector2 _currentPosition;
-	private float _speed;
+	public Vector2 Goal { get; set; }
+	public Vector2 Position { get; set; }
+	public float Speed { get; set; }
+	public StateMachine Machine { get; set; }
+	public EnemyWalkingState _walkingState;
+	public EnemyAttackState _attackState;
+
 
 	public event EventHandler<EnemyMovedEventArgs> OnMove;
 	public MotorcycleEnemyModel(Vector2 goal, Vector2 currentposition, float speed)
 	{
-		_goal = goal;
-		_currentPosition = currentposition;
-		_speed = speed;
-	}
-	public void UpdatePosition()
-	{
-		// Move towards the goal
-		Vector2 direction = _goal - _currentPosition;
-		if (_currentPosition == _goal)
-		{
-			direction = Vector2.Zero;
-		}
-		direction = Vector2.Normalize(direction);
-		direction *= _speed;
-		OnMoved(direction);
-	}
+		Goal = goal;
+		Position = currentposition;
+		Speed = speed;
+		_walkingState = new EnemyWalkingState(this);
+		_attackState = new EnemyAttackState(this);
+		Machine = new StateMachine(_walkingState);
 
-	private void OnMoved(Vector2 direction)
+	}
+	public void UpdatePosition(float deltaTime)
 	{
-		OnMove.Invoke(this, new EnemyMovedEventArgs(direction));
+		Machine.Update(deltaTime);
+	}
+	public void OnMoved(Vector2 direction)
+	{
+		if (direction == Vector2.Zero)
+		{
+			Machine.SwitchState(_attackState);
+		}
+		else
+		{
+			OnMove.Invoke(this, new EnemyMovedEventArgs(direction));
+		}
 	}
 }
 public class EnemyMovedEventArgs

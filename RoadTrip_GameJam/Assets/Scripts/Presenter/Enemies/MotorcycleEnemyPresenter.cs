@@ -22,11 +22,12 @@ public class MotorcycleEnemyPresenter : PresenterBase<MotorcycleEnemyModel>
     // Update is called once per frame
     void Update()
     {
-        Model.UpdatePosition();
+        Model.UpdatePosition(Time.deltaTime);
+		Model.Position = new System.Numerics.Vector2(transform.position.x, transform.position.y);
 	}
 	public void MoveCharacter(object sender, EnemyMovedEventArgs e)
 	{
-		transform.position += new UnityEngine.Vector3(e._direction.X, e._direction.Y, 0);
+		transform.position += new UnityEngine.Vector3(e._direction.X, e._direction.Y, 0) * Time.deltaTime;
 	}
 
 }
