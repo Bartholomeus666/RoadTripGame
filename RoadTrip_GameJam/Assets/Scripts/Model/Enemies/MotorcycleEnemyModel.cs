@@ -16,7 +16,7 @@ public class MotorcycleEnemyModel : ModelBase, IEnemyModel
 
 
 	public event EventHandler<EnemyMovedEventArgs> OnMove;
-	public event EventHandler<EnemyMovedEventArgs> OnDelete;
+	public event EventHandler<EventArgs> OnDelete;
 	public MotorcycleEnemyModel(Vector2 goal, Vector2 currentposition)
 	{
 		Goal = goal;

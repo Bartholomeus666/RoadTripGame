@@ -1,33 +1,43 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameModel : ModelBase
 {
-
     public List<IEnemyModel> EnemyModels;
 
     public event EventHandler<SpawnModelEventArgs<SimpleTurretModel>> SpawnSimpleTurretModel;
-    public event EventHandler<SpawnModelEventArgs<MotorcycleEnemyModel>> SpawnEnemyModel;
+    public event EventHandler<SpawnModelEventArgs<MotorcycleEnemyModel>> SpawnMotorCycleEnemyModel;
 
 	public GameObject _wagon;
 
+	public int IntervalMotorcycles;
+
+	float _time;
+
 	
-	public GameModel() 
+	public GameModel(int intervalMotorcycles) 
     {
-        EnemyModels = new List<IEnemyModel>();
+		IntervalMotorcycles = intervalMotorcycles;
+		EnemyModels = new List<IEnemyModel>();
 	}
-	public void Start()
+
+	public void Update(float deltaTime)
 	{
-		SpawnEnemy(new Vector2(-12, UnityEngine.Random.Range(-5,5)));
+		_time += deltaTime;
+
+		if (_time > IntervalMotorcycles)
+		{
+			_time = 0;
+			SpawnMotorCycle(new Vector2(-12, UnityEngine.Random.Range(-5, 5)));
+		}
 	}
-
-
-	public void SpawnEnemy(Vector2 postition)
+	public void SpawnMotorCycle(Vector2 postition)
 	{
 		MotorcycleEnemyModel newEnemy = new MotorcycleEnemyModel(_wagon.transform.position, postition);
 		EnemyModels.Add(newEnemy);
-		SpawnEnemyModel?.Invoke(this, new SpawnModelEventArgs<MotorcycleEnemyModel>(newEnemy));
+		SpawnMotorCycleEnemyModel?.Invoke(this, new SpawnModelEventArgs<MotorcycleEnemyModel>(newEnemy));
 	}
 
 	public void SpawnSimpleTurret(Vector2 postition)

@@ -18,6 +18,7 @@ public class MotorcycleEnemyPresenter : PresenterBase<MotorcycleEnemyModel>
     {
 		Model.Speed = _speed;
 		Model.OnMove += MoveCharacter;
+		Model.OnDelete += OnDelete;
 	}
 
     // Update is called once per frame
@@ -44,5 +45,9 @@ public class MotorcycleEnemyPresenter : PresenterBase<MotorcycleEnemyModel>
 		{
 			_isColliding = false;
 		}
+	}
+	public void OnDelete(object sender, EventArgs e)
+	{
+		Destroy(gameObject);
 	}
 }

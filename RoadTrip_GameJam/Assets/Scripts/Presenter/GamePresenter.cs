@@ -10,27 +10,30 @@ public class GamePresenter : PresenterBase<GameModel>
 
     [SerializeField] private GameObject _playerPrefab;
 
+    [SerializeField] private int IntervalMotorcycles;
+
 
 	private void Awake()
     {
-        Model = new GameModel();
+        Model = new GameModel(IntervalMotorcycles);
         Model.SpawnSimpleTurretModel += SpawnSimpleTurretPresenter;
-		Model.SpawnEnemyModel += SpawnEnemyPresenter;
+		Model.SpawnMotorCycleEnemyModel += SpawnMotorcycleEnemyPresenter;
 
         //Delete
         Model._wagon = _playerPrefab;
-
-        Model.Start();
-
+	}
+	private void Update()
+	{
+		Model.Update(Time.deltaTime);
 	}
 
-    private void SpawnSimpleTurretPresenter(object sender, SpawnModelEventArgs<SimpleTurretModel> e)
+	private void SpawnSimpleTurretPresenter(object sender, SpawnModelEventArgs<SimpleTurretModel> e)
     {
         GameObject newSimpleTurret = Instantiate(_simpleTurretPrefab, e.Model.Position, Quaternion.identity);
         newSimpleTurret.GetComponent<SimpleTurretPresenter>().Model = e.Model;
     }
 
-    private void SpawnEnemyPresenter(object sender, SpawnModelEventArgs<MotorcycleEnemyModel> e)
+    private void SpawnMotorcycleEnemyPresenter(object sender, SpawnModelEventArgs<MotorcycleEnemyModel> e)
     {
         GameObject newEnemy = Instantiate(_enemyPrefab, e.Model.Position, Quaternion.identity);
         newEnemy.GetComponent<MotorcycleEnemyPresenter>().Model = e.Model;
