@@ -4,10 +4,12 @@ using UnityEngine;
 public class SimpleTurretPresenter : PresenterBase<SimpleTurretModel>
 {
     [SerializeField] private float _range;
+    [SerializeField] private LayerMask _layerMask;
 
     private void Start()
     {
         Model.Range = _range;
+        Model.TargetLayers = _layerMask;
     }
     private void Update()
     {

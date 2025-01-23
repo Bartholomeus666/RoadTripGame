@@ -133,3 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _range: 2
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 2048

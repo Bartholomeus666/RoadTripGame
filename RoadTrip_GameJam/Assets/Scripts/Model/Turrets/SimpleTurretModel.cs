@@ -11,9 +11,11 @@ public class SimpleTurretModel : ModelBase, ITurret
     public GameObject Target { get; set; }
     public bool _readyToFire { get; set; } = false;
 
-    [SerializeField] LayerMask _targetLayers;
+    public float BulletSpeed = 2f;
 
-    public event EventHandler BulletFired;
+    public LayerMask TargetLayers;
+
+    public event EventHandler<ShotFiredEventArgs> BulletFired;
     public SimpleTurretModel(Vector2 postion) 
     { 
         Position = postion;
@@ -21,7 +23,7 @@ public class SimpleTurretModel : ModelBase, ITurret
 
     public void Shoot()
     {
-        Collider2D[] targetInViewRadius = Physics2D.OverlapCircleAll(Position, Range, _targetLayers);
+        Collider2D[] targetInViewRadius = Physics2D.OverlapCircleAll(Position, Range, TargetLayers);
         float targetDis = 10000000f;
 
         foreach(Collider2D target in targetInViewRadius)
@@ -31,8 +33,12 @@ public class SimpleTurretModel : ModelBase, ITurret
                 Target = target.gameObject;
             }
         }
-        BulletFired?.Invoke(this, new EventArgs());
-        Target = null;
+        if (Target != null)
+        {
+            BulletFired?.Invoke(this, new ShotFiredEventArgs(Target.gameObject.transform.position, BulletSpeed, this.Position)); 
+            Target = null;
+            _cooldownTime = 5f;
+        }
     }
 
     public void Update(float deltaTime)
@@ -41,10 +47,9 @@ public class SimpleTurretModel : ModelBase, ITurret
         { 
             _cooldownTime -= deltaTime;
         }
-        else
+        else if(Target == null)
         {
             Shoot();
-            _cooldownTime = 5;
         }
     }
 }

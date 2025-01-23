@@ -9,8 +9,9 @@ public class GameModel : ModelBase
 
     public event EventHandler<SpawnModelEventArgs<SimpleTurretModel>> SpawnSimpleTurretModel;
     public event EventHandler<SpawnModelEventArgs<MotorcycleEnemyModel>> SpawnEnemyModel;
+    public event EventHandler<SpawnModelEventArgs<BulletModel>> SpawnBulletModel;
 
-	public GameObject _wagon;
+    public GameObject _wagon;
 
 	
 	public GameModel() 
@@ -37,8 +38,9 @@ public class GameModel : ModelBase
         newSimpleTurret.BulletFired += SpawnBullet;
     }
 
-    private void SpawnBullet(object sender, EventArgs e)
+    private void SpawnBullet(object sender, ShotFiredEventArgs e)
     {
-        Debug.Log("Shoot Bullet");
+		BulletModel newBullet = new BulletModel(e.Target, e.Speed, e.StartPosition);
+        SpawnBulletModel?.Invoke(this, new SpawnModelEventArgs<BulletModel>(newBullet));
     }
 }
