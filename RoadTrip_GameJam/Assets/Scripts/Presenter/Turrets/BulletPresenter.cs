@@ -13,11 +13,10 @@ public class BulletPresenter : PresenterBase<BulletModel>
         }
     }
 
-    private void OnCollisionEnter2D<TModel>(Collision2D collision) where TModel : IEnemyModel
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.layer == 11)
         {
-            collision.gameObject.GetComponent<TModel>().DeleteThis();
             Destroy(this.gameObject);
         }
 

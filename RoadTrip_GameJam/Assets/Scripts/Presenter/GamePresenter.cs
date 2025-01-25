@@ -28,7 +28,7 @@ public class GamePresenter : PresenterBase<GameModel>
 
     private void SpawnBulletPresenter(object sender, SpawnModelEventArgs<BulletModel> e)
     {
-        GameObject newBullet = Instantiate(_bulletPrefab, e.Model.StartPosition, Quaternion.identity);
+        GameObject newBullet = Instantiate(_bulletPrefab, e.Model.StartPosition, Quaternion.Euler(0, 0, 35));
         newBullet.GetComponent<BulletPresenter>().Model = e.Model;
     }
 

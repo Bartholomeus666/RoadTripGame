@@ -50,5 +50,9 @@ public class MotorcycleEnemyPresenter : PresenterBase<MotorcycleEnemyModel>
 		{
 			_isColliding = false;
 		}
+		if(collision.gameObject.tag == "Bullet")
+		{
+			Model.DeleteThis();
+		}
 	}
 }
