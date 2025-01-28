@@ -12,4 +12,11 @@ public class BulletModel : ModelBase, IBullet
         Speed = speed;
         StartPosition = startPosition;
     }
+
+    public Quaternion GetBulletRotation()
+    {
+        Quaternion newAngle = Vector3.Angle(Target, StartPosition);
+
+        return Quaternion.identity;
+    }
 }
