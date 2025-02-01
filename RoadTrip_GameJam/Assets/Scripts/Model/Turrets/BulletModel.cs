@@ -15,8 +15,8 @@ public class BulletModel : ModelBase, IBullet
 
     public Quaternion GetBulletRotation()
     {
-        Quaternion newAngle = Vector3.Angle(Target, StartPosition);
+        Quaternion newAngle = new Quaternion(0, 0, Vector3.Angle(Target, StartPosition),0);
 
-        return Quaternion.identity;
+        return newAngle;
     }
 }

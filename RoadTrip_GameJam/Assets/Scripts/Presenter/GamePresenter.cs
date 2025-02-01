@@ -28,8 +28,9 @@ public class GamePresenter : PresenterBase<GameModel>
 
     private void SpawnBulletPresenter(object sender, SpawnModelEventArgs<BulletModel> e)
     {
-        GameObject newBullet = Instantiate(_bulletPrefab, e.Model.StartPosition, Quaternion.Euler(0, 0, 35));
+        GameObject newBullet = Instantiate(_bulletPrefab, e.Model.StartPosition, Quaternion.identity);
         newBullet.GetComponent<BulletPresenter>().Model = e.Model;
+        newBullet.transform.rotation = newBullet.GetComponent<BulletPresenter>().Model.GetBulletRotation();
     }
 
     private void SpawnSimpleTurretPresenter(object sender, SpawnModelEventArgs<SimpleTurretModel> e)
