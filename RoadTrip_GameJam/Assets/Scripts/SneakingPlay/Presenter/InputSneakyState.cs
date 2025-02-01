@@ -20,8 +20,8 @@ public class InputSneakyState : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
 
         DrawLine.Enable();
-        DrawLine.started += StartLine;
-        DrawLine.canceled += CancelLine;
+        //DrawLine.started += StartLine;
+        //DrawLine.canceled += CancelLine;
         DrawLine.performed += DrawPlayerLine;
     }
 
@@ -29,14 +29,6 @@ public class InputSneakyState : MonoBehaviour
     {
         _playerModel = FindAnyObjectByType<SneakyPlayerPresenter>().Model;
     }
-
-
-
-    private void StartLine(InputAction.CallbackContext context)
-    {
-        Debug.Log("Touch");
-    }
-
 
 
     private void DrawPlayerLine(InputAction.CallbackContext context)
@@ -71,13 +63,6 @@ public class InputSneakyState : MonoBehaviour
     }
 
 
-    private void CancelLine(InputAction.CallbackContext context)
-    {
-        Debug.Log("Ended");
-    }
-
-
-
     private void Update()
     {
         if (_isDrawing && !IsTouchingScreen())
@@ -101,8 +86,8 @@ public class InputSneakyState : MonoBehaviour
 
     private void OnDisable()
     {
-        DrawLine.started -= StartLine;
-        DrawLine.canceled -= CancelLine;
+        //DrawLine.started -= StartLine;
+        //DrawLine.canceled -= CancelLine;
         DrawLine.performed -= DrawPlayerLine;
         DrawLine.Disable();
     }
