@@ -41,6 +41,6 @@ public class SneakyPlayerModel: ModelBase
 
     public void NextPoint()
     {
-        _index++;
+        Index++;
     }
 }
