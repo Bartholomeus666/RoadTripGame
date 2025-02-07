@@ -62,14 +62,13 @@ public class InputSneakyState : MonoBehaviour
 
     }
 
-
     private void Update()
     {
         if (_isDrawing && !IsTouchingScreen())
         {
             Debug.Log("Touch Released");
 
-            _playerModel.FollowLine(_lineRenderer);
+            _playerModel.GetLine(_lineRenderer);
             _isDrawing = false;
         }
     }
@@ -79,10 +78,6 @@ public class InputSneakyState : MonoBehaviour
         return (Mouse.current != null && Mouse.current.leftButton.isPressed) ||
                (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed);
     }
-
-
-
-
 
     private void OnDisable()
     {
